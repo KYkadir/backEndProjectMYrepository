@@ -5,10 +5,8 @@ import com.project.schoolmanagment.payload.response.ContactMessageResponse;
 import com.project.schoolmanagment.payload.response.ResponseMessage;
 import com.project.schoolmanagment.service.ContactMessageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -16,13 +14,22 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("contactMessages")
 @RequiredArgsConstructor
-public class ContactMessageContoller {
+public class  ContactMessageContoller {
 
 	private final ContactMessageService contactMessageService;
 
 	@PostMapping("/save")
 	public ResponseMessage<ContactMessageResponse> save(@RequestBody @Valid ContactMessageRequest contactMessageRequest){
 		return contactMessageService.save(contactMessageRequest);
+	}
+	@GetMapping("/getAll")
+	//@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+	public Page<ContactMessageResponse> getAll(
+			@RequestParam(value = "page",defaultValue = "0") int page,
+			@RequestParam(value = "size",defaultValue = "10") int size,
+			@RequestParam(value = "sort",defaultValue = "date") String sort,
+			@RequestParam(value = "type", defaultValue = "desc") String type){
+		return contactMessageService.getAll(page,size,sort,type);
 	}
 
 
