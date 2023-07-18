@@ -14,35 +14,28 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
-//TODO learn about serialization and de-serialization
+@Builder(toBuilder = true)    //yeni bir nesne olusturmak yerine varolan nesnenin kopyasini alarak degisiklik yapmamizi saglar
 public class ContactMessage implements Serializable {
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private Long id;
+   @NotNull
+   private String name;
+   @NotNull
+   private String email;
+   @NotNull
+   private String subject;
+   @NotNull
+   private String message;
+   @JsonFormat(shape= JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
+   private LocalDate date;
 
-	//TODO check all generation types and strategies
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//better to give a naming contactMessageId, contactMessageName, contactMessageSubject
-	private Long id;
 
-	@NotNull
-	private String name;
 
-	@NotNull
-	private String email;
 
-	@NotNull
-	private String subject;
-
-	@NotNull
-	private String message;
-
-	//2025-06-05
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private LocalDate date;
 
 }

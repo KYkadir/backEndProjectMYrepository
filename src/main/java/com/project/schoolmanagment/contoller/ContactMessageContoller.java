@@ -23,7 +23,7 @@ public class  ContactMessageContoller {
 		return contactMessageService.save(contactMessageRequest);
 	}
 	@GetMapping("/getAll")
-	//@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+	// @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
 	public Page<ContactMessageResponse> getAll(
 			@RequestParam(value = "page",defaultValue = "0") int page,
 			@RequestParam(value = "size",defaultValue = "10") int size,
@@ -31,7 +31,30 @@ public class  ContactMessageContoller {
 			@RequestParam(value = "type", defaultValue = "desc") String type){
 		return contactMessageService.getAll(page,size,sort,type);
 	}
+	@GetMapping("/searchByEmail")
+	//@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+	public Page<ContactMessageResponse> searchByEmail(
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "page",defaultValue = "0") int page,
+			@RequestParam(value = "size",defaultValue = "10") int size,
+			@RequestParam(value = "sort",defaultValue = "date") String sort,
+			@RequestParam(value = "type", defaultValue = "desc") String type){
+		return contactMessageService.searchByEmail(email,page,size,sort,type);
+	}
 
+	@GetMapping("/searchBySubject")
+	//@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER','ASSISTANT_MANAGER')")
+	public Page<ContactMessageResponse> searchBySubject(
+			@RequestParam(value = "subject") String subject,
+			@RequestParam(value = "page",defaultValue = "0") int page,
+			@RequestParam(value = "size",defaultValue = "10") int size,
+			@RequestParam(value = "sort",defaultValue = "date") String sort,
+			@RequestParam(value = "type", defaultValue = "desc") String type){
+		return contactMessageService.searchBySubject(subject,page,size,sort,type);
+	}
+    // 1-Delete by ID
+	// 2-update (first find the correct contact message according to its ID
+	// 3-getAllMessages as a list.
 
 
 }
